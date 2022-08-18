@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_application/screen/category_meals_screen.dart';
 import 'package:meal_application/screen/category_screen.dart';
+import 'package:meal_application/screen/tab_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,9 +32,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
             .copyWith(secondary: Colors.amber),
       ),
-      initialRoute: MyHomePage.homePageRoute,
+      initialRoute: TabScreen.route,
       routes: {
-        MyHomePage.homePageRoute: (context) => const MyHomePage(),
+        TabScreen.route: (context) => const TabScreen(),
         CategoryScr.route : (context) => const CategoryScr(),
         CategoryMealsScr.route : (context) => const CategoryMealsScr(),
       },
@@ -57,21 +58,5 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  static const homePageRoute = "/";
-  const MyHomePage({Key? key}) : super(key: key);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Meals Application"),
-        ),
-        body: const Center());
-  }
-}
