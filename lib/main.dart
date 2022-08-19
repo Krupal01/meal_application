@@ -3,6 +3,7 @@ import 'package:meal_application/model/dummy_data.dart';
 import 'package:meal_application/model/meals.dart';
 import 'package:meal_application/screen/category_meals_screen.dart';
 import 'package:meal_application/screen/category_screen.dart';
+import 'package:meal_application/screen/meal_details_screen.dart';
 import 'package:meal_application/screen/tab_screen.dart';
 
 void main() {
@@ -19,7 +20,27 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   final List<Meal> _availableMeals = DUMMY_MEALS;
+  final List<Meal> _favoriteMeals = [];
 
+  void _toggleFavorite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(
+          DUMMY_MEALS.firstWhere((meal) => meal.id == mealId),
+        );
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) => meal.id == id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +69,7 @@ class _MyAppState extends State<MyApp> {
         TabScreen.route: (context) => const TabScreen(),
         CategoryScr.route : (context) => const CategoryScr(),
         CategoryMealsScr.route : (context) => CategoryMealsScr(availableMeals: _availableMeals,),
+        MealDetailsScreen.route : (context) => MealDetailsScreen(isFavorite: _isMealFavorite, toggleFavorite: _toggleFavorite)
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print
