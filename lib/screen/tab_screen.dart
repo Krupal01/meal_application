@@ -3,9 +3,12 @@ import 'package:meal_application/screen/category_screen.dart';
 import 'package:meal_application/screen/favorites_screen.dart';
 import 'package:meal_application/widget/main_drawer.dart';
 
+import '../model/meals.dart';
+
 class TabScreen extends StatefulWidget {
   static const route = '/';
-  const TabScreen({Key? key}) : super(key: key);
+  final List<Meal> favoriteMeals;
+  const TabScreen({Key? key,  required this.favoriteMeals}) : super(key: key);
 
   @override
   State<TabScreen> createState() => _TabScreenState();
@@ -23,7 +26,7 @@ class _TabScreenState extends State<TabScreen> {
         'title': 'Categories',
       },
       {
-        'page': const FavoritesScr(),
+        'page': FavoritesScr(favoriteMeals: widget.favoriteMeals),
         'title': 'Your Favorite',
       },
     ];

@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: TabScreen.route,
       routes: {
-        TabScreen.route: (context) => const TabScreen(),
+        TabScreen.route: (context) => TabScreen(favoriteMeals: _favoriteMeals),
         CategoryScr.route : (context) => const CategoryScr(),
         CategoryMealsScr.route : (context) => CategoryMealsScr(availableMeals: _availableMeals,),
         MealDetailsScreen.route : (context) => MealDetailsScreen(isFavorite: _isMealFavorite, toggleFavorite: _toggleFavorite)
