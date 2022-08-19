@@ -3,6 +3,7 @@ import 'package:meal_application/model/dummy_data.dart';
 import 'package:meal_application/model/meals.dart';
 import 'package:meal_application/screen/category_meals_screen.dart';
 import 'package:meal_application/screen/category_screen.dart';
+import 'package:meal_application/screen/filter_screen.dart';
 import 'package:meal_application/screen/meal_details_screen.dart';
 import 'package:meal_application/screen/tab_screen.dart';
 
@@ -19,8 +20,25 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _availableMeals = DUMMY_MEALS;
   final List<Meal> _favoriteMeals = [];
+
+  Map<String, bool> _filters = {
+    'vegetarian': false,
+  };
+
+   void _setFilters(Map<String, bool> filterData) {
+    setState(() {
+      _filters = filterData;
+
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['vegetarian']! && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
 
   void _toggleFavorite(String mealId) {
     final existingIndex =
@@ -69,7 +87,8 @@ class _MyAppState extends State<MyApp> {
         TabScreen.route: (context) => TabScreen(favoriteMeals: _favoriteMeals),
         CategoryScr.route : (context) => const CategoryScr(),
         CategoryMealsScr.route : (context) => CategoryMealsScr(availableMeals: _availableMeals,),
-        MealDetailsScreen.route : (context) => MealDetailsScreen(isFavorite: _isMealFavorite, toggleFavorite: _toggleFavorite)
+        MealDetailsScreen.route : (context) => MealDetailsScreen(isFavorite: _isMealFavorite, toggleFavorite: _toggleFavorite),
+        FiltersScreen.routeName : (context) => FiltersScreen(_filters, _setFilters)
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print
