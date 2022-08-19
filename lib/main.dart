@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_application/model/dummy_data.dart';
+import 'package:meal_application/model/meals.dart';
 import 'package:meal_application/screen/category_meals_screen.dart';
 import 'package:meal_application/screen/category_screen.dart';
 import 'package:meal_application/screen/tab_screen.dart';
@@ -7,8 +9,17 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  final List<Meal> _availableMeals = DUMMY_MEALS;
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +47,7 @@ class MyApp extends StatelessWidget {
       routes: {
         TabScreen.route: (context) => const TabScreen(),
         CategoryScr.route : (context) => const CategoryScr(),
-        CategoryMealsScr.route : (context) => const CategoryMealsScr(),
+        CategoryMealsScr.route : (context) => CategoryMealsScr(availableMeals: _availableMeals,),
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print
